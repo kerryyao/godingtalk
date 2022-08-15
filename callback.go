@@ -10,8 +10,8 @@ type Callback struct {
 	Callbacks []string `json:"call_back_tag"`
 }
 
-// RegisterCallback is 注册事件回调接口
-func RegisterCallback(callbacks []string, token string, aes_key string, callbackURL string) (*OAPIResponse, error) {
+// Register is 注册事件回调接口
+func CallbackRegister(callbacks []string, token string, aes_key string, callbackURL string) (*OAPIResponse, error) {
 	data := &OAPIResponse{}
 	request := map[string]interface{}{
 		"call_back_tag": callbacks,
@@ -30,8 +30,8 @@ func RegisterCallback(callbacks []string, token string, aes_key string, callback
 	return data, err
 }
 
-// UpdateCallback is 更新事件回调接口
-func UpdateCallback(callbacks []string, token string, aes_key string, callbackURL string) (*OAPIResponse, error) {
+// Update 更新事件回调接口
+func CallbackUpdate(callbacks []string, token string, aes_key string, callbackURL string) (*OAPIResponse, error) {
 	data := &OAPIResponse{}
 	request := map[string]interface{}{
 		"call_back_tag": callbacks,
@@ -50,8 +50,8 @@ func UpdateCallback(callbacks []string, token string, aes_key string, callbackUR
 	return data, err
 }
 
-// DeleteCallback is 删除事件回调接口
-func DeleteCallback() (*OAPIResponse, error) {
+// Delete is 删除事件回调接口
+func CallbackDelete() (*OAPIResponse, error) {
 	data := &OAPIResponse{}
 	payload, err := httpRequest("call_back/delete_call_back", nil, nil)
 	if err != nil {
@@ -64,8 +64,8 @@ func DeleteCallback() (*OAPIResponse, error) {
 	return data, err
 }
 
-// ListCallback is 查询事件回调接口
-func ListCallback() (*Callback, error) {
+// List is 查询事件回调接口
+func CallbackList() (*Callback, error) {
 	data := &Callback{}
 	payload, err := httpRequest("call_back/get_call_back", nil, nil)
 	if err != nil {
