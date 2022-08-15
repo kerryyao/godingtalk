@@ -4,6 +4,11 @@ var (
 	conf *Config
 )
 
+type OAPIResponse struct {
+	ErrCode int    `json:"errcode"`
+	ErrMsg  string `json:"errmsg"`
+}
+
 func Init(config *Config) {
 	conf = config
 	if conf == nil {
