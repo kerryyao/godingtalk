@@ -3,7 +3,6 @@ package godingtalk
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/url"
 	"time"
 
@@ -27,27 +26,10 @@ func Init(config *Config) {
 	cache = gocache.New(7200*time.Second, 9000*time.Second)
 }
 
-// Unmarshallable is
-type Unmarshallable interface {
-	checkError() error
-	getWriter() io.Writer
-}
-
 // OAPIResponse is
 type OAPIResponse struct {
 	ErrCode int    `json:"errcode"`
 	ErrMsg  string `json:"errmsg"`
-}
-
-func (data *OAPIResponse) checkError() (err error) {
-	if data.ErrCode != 0 {
-		err = fmt.Errorf("%d: %s", data.ErrCode, data.ErrMsg)
-	}
-	return err
-}
-
-func (data *OAPIResponse) getWriter() io.Writer {
-	return nil
 }
 
 // MessageResponse is
@@ -75,17 +57,6 @@ type JsAPITicketResponse struct {
 	OAPIResponse
 	Ticket  string
 	Expires int `json:"expires_in"`
-	Created int64
-}
-
-// CreatedAt is when the ticket is generated
-func (e *JsAPITicketResponse) CreatedAt() int64 {
-	return e.Created
-}
-
-// ExpiresIn is how soon the ticket is expired
-func (e *JsAPITicketResponse) ExpiresIn() int {
-	return e.Expires
 }
 
 // RefreshAccessToken is to get a valid access token

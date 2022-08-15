@@ -29,6 +29,12 @@ type DownloadFile struct {
 func httpRequest(path string, params url.Values, requestData interface{}) (*[]byte, error) {
 	client := &http.Client{}
 
+	token, err := RefreshAccessToken()
+	if err != nil {
+		return nil, err
+	}
+	params.Set("access_token", *token)
+
 	var request *http.Request
 	url := "https://" + conf.BaseURL + "/" + path + "?" + params.Encode()
 	if requestData != nil {
