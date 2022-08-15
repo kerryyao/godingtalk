@@ -63,7 +63,7 @@ func DepartmentList() (*DepartmentListResponse, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data, err
+	return &data, nil
 }
 
 // DepartmentDetail is 获取部门详情
@@ -79,7 +79,7 @@ func DepartmentDetail(id int) (*Department, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data, err
+	return &data, nil
 }
 
 // UserList is 获取部门成员
@@ -101,7 +101,7 @@ func UserList(departmentID, offset, size int) (*UserListResponse, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data, err
+	return &data, nil
 }
 
 // CreateChat is
@@ -123,7 +123,7 @@ func CreateChat(name string, owner string, useridlist []string) (*string, error)
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data.Chatid, err
+	return &data.Chatid, nil
 }
 
 // UserInfoByCode 校验免登录码并换取用户身份
@@ -139,7 +139,7 @@ func UserInfoByCode(code string) (*User, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data, err
+	return &data, nil
 }
 
 // UserInfoByUserId 获取用户详情
@@ -154,7 +154,7 @@ func UserInfoByUserId(userid string) (*User, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data, err
+	return &data, nil
 }
 
 // UseridByUnionId 通过UnionId获取玩家Userid
@@ -174,7 +174,7 @@ func UseridByUnionId(unionid string) (*string, error) {
 		return nil, err
 	}
 
-	return &data.UserID, err
+	return &data.UserID, nil
 }
 
 // UseridByMobile 通过手机号获取Userid
@@ -193,5 +193,5 @@ func UseridByMobile(mobile string) (*string, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-	return &data.UserID, err
+	return &data.UserID, nil
 }
