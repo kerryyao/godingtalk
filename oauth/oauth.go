@@ -5,12 +5,11 @@ import (
 	"net/url"
 
 	"github.com/kerryyao/godingtalk"
-	"github.com/kerryyao/godingtalk/contact"
 )
 
 // OauthUserInfoByCode 通过免登码获取用户信息
-func OauthUserInfoByCode(code string) (*contact.User, error) {
-	var data contact.User
+func OauthUserInfoByCode(code string) (*UserResponse, error) {
+	var data UserResponse
 	params := url.Values{}
 	body := &struct {
 		Code string `json:"code"`

@@ -28,8 +28,9 @@ func Init(config *Config) {
 
 // OAPIResponse is
 type OAPIResponse struct {
-	ErrCode int    `json:"errcode"`
-	ErrMsg  string `json:"errmsg"`
+	ErrCode   int    `json:"errcode"`
+	ErrMsg    string `json:"errmsg"`
+	RequestID string `json:"request_id"`
 }
 
 // AccessTokenResponse is
