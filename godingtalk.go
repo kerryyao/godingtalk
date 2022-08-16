@@ -55,10 +55,10 @@ func RefreshAccessToken() (*string, error) {
 	}
 
 	params := url.Values{}
-	params.Add("appkey", Conf.AppKey)
-	params.Add("appsecret", Conf.AppSecret)
+	params.Add("appKey", Conf.AppKey)
+	params.Add("appSecret", Conf.AppSecret)
 
-	payload, err := HttpRequest("gettoken", params, nil)
+	payload, err := HttpRequest("v1.0/oauth2/accessToken", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func GetJsAPITicket(nonceStr, timestamp, url string) (string, error) {
 	}
 
 	if data == nil {
-		payload, err := HttpRequest("get_jsapi_ticket", nil, nil)
+		payload, err := HttpRequestWithToken("get_jsapi_ticket", nil, nil)
 		if err == nil {
 			return "", err
 		}

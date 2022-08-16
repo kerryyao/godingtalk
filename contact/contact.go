@@ -11,7 +11,7 @@ import (
 // DepartmentList is 获取部门列表
 func DepartmentList() (*DepartmentListResponse, error) {
 	var data DepartmentListResponse
-	payload, err := godingtalk.HttpRequest("department/list", nil, nil)
+	payload, err := godingtalk.HttpRequestWithToken("department/list", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func DepartmentDetail(id int) (*Department, error) {
 	var data Department
 	params := url.Values{}
 	params.Add("id", fmt.Sprintf("%d", id))
-	payload, err := godingtalk.HttpRequest("department/get", params, nil)
+	payload, err := godingtalk.HttpRequestWithToken("department/get", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func UserList(departmentID, offset, size int) (*UserListResponse, error) {
 	params.Add("department_id", fmt.Sprintf("%d", departmentID))
 	params.Add("offset", fmt.Sprintf("%d", offset))
 	params.Add("size", fmt.Sprintf("%d", size))
-	payload, err := godingtalk.HttpRequest("user/list", params, nil)
+	payload, err := godingtalk.HttpRequestWithToken("user/list", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func CreateChat(name string, owner string, useridlist []string) (*string, error)
 		"owner":      owner,
 		"useridlist": useridlist,
 	}
-	payload, err := godingtalk.HttpRequest("chat/create", nil, request)
+	payload, err := godingtalk.HttpRequestWithToken("chat/create", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func UserInfoByUserId(userid string) (*User, error) {
 	var data User
 	params := url.Values{}
 	params.Add("userid", userid)
-	payload, err := godingtalk.HttpRequest("user/get", params, nil)
+	payload, err := godingtalk.HttpRequestWithToken("user/get", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +106,7 @@ func UseridByUnionId(unionid string) (*string, error) {
 
 	params := url.Values{}
 	params.Add("unionid", unionid)
-	payload, err := godingtalk.HttpRequest("user/getUseridByUnionid", params, nil)
+	payload, err := godingtalk.HttpRequestWithToken("user/getUseridByUnionid", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +126,7 @@ func UseridByMobile(mobile string) (*string, error) {
 
 	params := url.Values{}
 	params.Add("mobile", mobile)
-	payload, err := godingtalk.HttpRequest("user/get_by_mobile", params, nil)
+	payload, err := godingtalk.HttpRequestWithToken("user/get_by_mobile", params, nil)
 	if err != nil {
 		return nil, err
 	}

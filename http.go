@@ -30,12 +30,6 @@ type DownloadFile struct {
 func HttpRequest(path string, params url.Values, requestData interface{}) (*[]byte, error) {
 	client := &http.Client{}
 
-	token, err := RefreshAccessToken()
-	if err != nil {
-		return nil, err
-	}
-	params.Set("access_token", *token)
-
 	var request *http.Request
 	url := fmt.Sprintf(`%s/%s?%s`, Conf.BaseURL, path, params.Encode())
 	if requestData != nil {
@@ -86,4 +80,15 @@ DOIT:
 		return nil, err
 	}
 	return &content, nil
+}
+
+// http request with token
+func HttpRequestWithToken(path string, params url.Values, requestData interface{}) (*[]byte, error) {
+	token, err := RefreshAccessToken()
+	if err != nil {
+		return nil, err
+	}
+	params.Set("access_token", *token)
+
+	return HttpRequest(path, params, requestData)
 }
