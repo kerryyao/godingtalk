@@ -101,5 +101,5 @@ type Department struct {
 
 type DepartmentListResponse struct {
 	godingtalk.OAPIResponse
-	Departments []Department `json:"department"`
+	Result []Department `json:"result"`
 }

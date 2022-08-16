@@ -12,10 +12,18 @@ func DepartmentCreate() {
 
 }
 
-// DepartmentList is 获取部门列表
-func DepartmentList() (*DepartmentListResponse, error) {
+// 获取部门列表
+func DepartmentList(parentid int) (*DepartmentListResponse, error) {
 	var data DepartmentListResponse
-	payload, err := godingtalk.HttpRequest("department/list", nil, nil)
+	params := url.Values{}
+	reqData := &struct {
+		DeptID   int    `json:"dept_id"`
+		Language string `json:"language"`
+	}{
+		DeptID:   parentid,
+		Language: "zh_CN",
+	}
+	payload, err := godingtalk.HttpRequest("v2/department/listsub", params, reqData)
 	if err != nil {
 		return nil, err
 	}
