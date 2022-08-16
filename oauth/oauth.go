@@ -8,12 +8,16 @@ import (
 	"github.com/kerryyao/godingtalk/contact"
 )
 
-// OauthUserInfoByCode 校验免登录码并换取用户身份
+// OauthUserInfoByCode 通过免登码获取用户信息
 func OauthUserInfoByCode(code string) (*contact.User, error) {
 	var data contact.User
 	params := url.Values{}
-	params.Add("code", code)
-	payload, err := godingtalk.HttpRequest("user/getuserinfo", params, nil)
+	body := &struct {
+		Code string `json:"code"`
+	}{
+		Code: code,
+	}
+	payload, err := godingtalk.HttpRequest("topapi/v2/user/getuserinfo", params, body)
 	if err != nil {
 		return nil, err
 	}
