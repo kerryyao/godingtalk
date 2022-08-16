@@ -55,8 +55,8 @@ func RefreshAccessToken() (*string, error) {
 	}
 
 	params := url.Values{}
-	params.Add("appKey", Conf.AppKey)
-	params.Add("appSecret", Conf.AppSecret)
+	params.Add("appkey", Conf.AppKey)
+	params.Add("appsecret", Conf.AppSecret)
 
 	payload, err := httpRequest("gettoken", params, nil)
 	if err != nil {
