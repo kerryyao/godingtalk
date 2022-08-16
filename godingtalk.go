@@ -66,9 +66,9 @@ func RefreshAccessToken() (*string, error) {
 	if err := json.Unmarshal(*payload, &data); err != nil {
 		return nil, err
 	}
-
-	cache.Set("auth", data, time.Duration(data.Expires)*time.Second)
-
+	if data.AccessToken != "" {
+		cache.Set("auth", data, time.Duration(data.Expires)*time.Second)
+	}
 	return &data.AccessToken, nil
 }
 
