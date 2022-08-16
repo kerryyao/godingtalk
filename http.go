@@ -31,7 +31,7 @@ func httpRequest(path string, params url.Values, requestData interface{}) (*[]by
 	var request *http.Request
 
 	url := fmt.Sprintf(`%s/%s?%s`, Conf.BaseURL, path, params.Encode())
-	if requestData != nil {
+	if requestData == nil {
 		request, _ = http.NewRequest("GET", url, nil)
 		goto DOIT
 	}
