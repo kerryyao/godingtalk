@@ -47,7 +47,11 @@ type JsAPITicketResponse struct {
 }
 
 // RefreshAccessToken is to get a valid access token
-func RefreshAccessToken() (*string, error) {
+func RefreshAccessToken(path string) (*string, error) {
+	if path == "v1.0/oauth2/accessToken" {
+		return nil, nil
+	}
+
 	var data *AccessTokenResponse
 	if cacheData, found := cache.Get("auth"); found {
 		data = cacheData.(*AccessTokenResponse)
@@ -81,7 +85,7 @@ func GetJsAPITicket(nonceStr, timestamp, url string) (string, error) {
 	}
 
 	if data == nil {
-		payload, err := HttpRequestWithToken("get_jsapi_ticket", nil, nil)
+		payload, err := HttpRequest("get_jsapi_ticket", nil, nil)
 		if err == nil {
 			return "", err
 		}

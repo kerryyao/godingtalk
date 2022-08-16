@@ -13,7 +13,7 @@ func OauthUserInfoByCode(code string) (*contact.User, error) {
 	var data contact.User
 	params := url.Values{}
 	params.Add("code", code)
-	payload, err := godingtalk.HttpRequestWithToken("user/getuserinfo", params, nil)
+	payload, err := godingtalk.HttpRequest("user/getuserinfo", params, nil)
 	if err != nil {
 		return nil, err
 	}

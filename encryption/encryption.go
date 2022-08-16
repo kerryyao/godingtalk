@@ -12,7 +12,7 @@ func Encrypt(str string) (string, error) {
 	request := map[string]interface{}{
 		"data": str,
 	}
-	payload, err := godingtalk.HttpRequestWithToken("encryption/encrypt", nil, request)
+	payload, err := godingtalk.HttpRequest("encryption/encrypt", nil, request)
 	if err != nil {
 		return "", err
 	}
@@ -28,7 +28,7 @@ func Decrypt(str string) (string, error) {
 	request := map[string]interface{}{
 		"data": str,
 	}
-	payload, err := godingtalk.HttpRequestWithToken("encryption/decrypt", nil, request)
+	payload, err := godingtalk.HttpRequest("encryption/decrypt", nil, request)
 	if err != nil {
 		return "", err
 	}

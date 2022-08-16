@@ -22,7 +22,7 @@ func SendAppMessage(agentID string, touser string, msg string) (*godingtalk.OAPI
 			"content": msg,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("message/send", nil, request)
+	payload, err := godingtalk.HttpRequest("message/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func SendAppOAMessage(agentID string, touser string, msg OAMessage) (*godingtalk
 		"msgtype": "oa",
 		"oa":      msg,
 	}
-	payload, err := godingtalk.HttpRequestWithToken("message/send", nil, request)
+	payload, err := godingtalk.HttpRequest("message/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func SendOverAllActionCardMessage(agentID string, touser string, msg OverAllActi
 		"msgtype":     "action_card",
 		"action_card": msg,
 	}
-	payload, err := godingtalk.HttpRequestWithToken("message/send", nil, request)
+	payload, err := godingtalk.HttpRequest("message/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func SendIndependentActionCardMessage(agentID string, touser string, msg Indepen
 		"msgtype":     "action_card",
 		"action_card": msg,
 	}
-	payload, err := godingtalk.HttpRequestWithToken("message/send", nil, request)
+	payload, err := godingtalk.HttpRequest("message/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func SendAppLinkMessage(agentID, touser string, title, text string, picUrl, url 
 			"text":       text,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("message/send", nil, request)
+	payload, err := godingtalk.HttpRequest("message/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func SendTextMessage(sender string, cid string, msg string) (*MessageResponse, e
 			"content": msg,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("chat/send", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func SendImageMessage(sender string, cid string, mediaID string) (*MessageRespon
 			"media_id": mediaID,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("chat/send", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +178,7 @@ func SendVoiceMessage(sender string, cid string, mediaID string, duration string
 			"duration": duration,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("chat/send", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func SendFileMessage(sender string, cid string, mediaID string) (*MessageRespons
 			"media_id": mediaID,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("chat/send", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +223,7 @@ func SendLinkMessage(sender string, cid string, mediaID string, url string, titl
 			"text":       text,
 		},
 	}
-	payload, err := godingtalk.HttpRequestWithToken("chat/send", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -312,7 +312,7 @@ func SendOAMessage(sender string, cid string, msg OAMessage) (*MessageResponse, 
 		"msgtype": "oa",
 		"oa":      msg,
 	}
-	payload, err := godingtalk.HttpRequestWithToken("chat/send", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/send", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -329,7 +329,7 @@ func GetMessageReadList(messageID string, cursor int, size int) (*MessageReadLis
 	params.Add("messageId", messageID)
 	params.Add("cursor", strconv.Itoa(cursor))
 	params.Add("size", strconv.Itoa(size))
-	payload, err := godingtalk.HttpRequestWithToken("chat/getReadList", params, nil)
+	payload, err := godingtalk.HttpRequest("chat/getReadList", params, nil)
 	if err != nil {
 		return nil, err
 	}
