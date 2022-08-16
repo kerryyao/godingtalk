@@ -82,22 +82,6 @@ func CreateChat(name string, owner string, useridlist []string) (*string, error)
 	return &data.Chatid, nil
 }
 
-// UserInfoByCode 校验免登录码并换取用户身份
-func UserInfoByCode(code string) (*User, error) {
-	var data User
-	params := url.Values{}
-	params.Add("code", code)
-	payload, err := godingtalk.HttpRequest("user/getuserinfo", params, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal(*payload, &data); err != nil {
-		return nil, err
-	}
-	return &data, nil
-}
-
 // UserInfoByUserId 获取用户详情
 func UserInfoByUserId(userid string) (*User, error) {
 	var data User

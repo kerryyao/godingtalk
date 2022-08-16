@@ -1,25 +1,21 @@
-package godingtalk
+package callback
 
-import "encoding/json"
+import (
+	"encoding/json"
 
-type Callback struct {
-	OAPIResponse
-	Token     string
-	AES_KEY   string `json:"aes_key"`
-	URL       string
-	Callbacks []string `json:"call_back_tag"`
-}
+	"github.com/kerryyao/godingtalk"
+)
 
 // Register is 注册事件回调接口
-func CallbackRegister(callbacks []string, token string, aes_key string, callbackURL string) (*OAPIResponse, error) {
-	data := &OAPIResponse{}
+func CallbackRegister(callbacks []string, token string, aes_key string, callbackURL string) (*godingtalk.OAPIResponse, error) {
+	data := &godingtalk.OAPIResponse{}
 	request := map[string]interface{}{
 		"call_back_tag": callbacks,
 		"token":         token,
 		"aes_key":       aes_key,
 		"url":           callbackURL,
 	}
-	payload, err := HttpRequest("call_back/register_call_back", nil, request)
+	payload, err := godingtalk.HttpRequest("call_back/register_call_back", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -31,15 +27,15 @@ func CallbackRegister(callbacks []string, token string, aes_key string, callback
 }
 
 // Update 更新事件回调接口
-func CallbackUpdate(callbacks []string, token string, aes_key string, callbackURL string) (*OAPIResponse, error) {
-	data := &OAPIResponse{}
+func CallbackUpdate(callbacks []string, token string, aes_key string, callbackURL string) (*godingtalk.OAPIResponse, error) {
+	data := &godingtalk.OAPIResponse{}
 	request := map[string]interface{}{
 		"call_back_tag": callbacks,
 		"token":         token,
 		"aes_key":       aes_key,
 		"url":           callbackURL,
 	}
-	payload, err := HttpRequest("call_back/update_call_back", nil, request)
+	payload, err := godingtalk.HttpRequest("call_back/update_call_back", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -51,9 +47,9 @@ func CallbackUpdate(callbacks []string, token string, aes_key string, callbackUR
 }
 
 // Delete is 删除事件回调接口
-func CallbackDelete() (*OAPIResponse, error) {
-	data := &OAPIResponse{}
-	payload, err := HttpRequest("call_back/delete_call_back", nil, nil)
+func CallbackDelete() (*godingtalk.OAPIResponse, error) {
+	data := &godingtalk.OAPIResponse{}
+	payload, err := godingtalk.HttpRequest("call_back/delete_call_back", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +63,7 @@ func CallbackDelete() (*OAPIResponse, error) {
 // List is 查询事件回调接口
 func CallbackList() (*Callback, error) {
 	data := &Callback{}
-	payload, err := HttpRequest("call_back/get_call_back", nil, nil)
+	payload, err := godingtalk.HttpRequest("call_back/get_call_back", nil, nil)
 	if err != nil {
 		return nil, err
 	}

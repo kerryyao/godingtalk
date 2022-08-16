@@ -1,12 +1,10 @@
-package godingtalk
+package encryption
 
-import "encoding/json"
+import (
+	"encoding/json"
 
-// DataMessage 服务端加密、解密消息
-type DataMessage struct {
-	OAPIResponse
-	Data string
-}
+	"github.com/kerryyao/godingtalk"
+)
 
 // Encrypt is 服务端加密
 func Encrypt(str string) (string, error) {
@@ -14,7 +12,7 @@ func Encrypt(str string) (string, error) {
 	request := map[string]interface{}{
 		"data": str,
 	}
-	payload, err := HttpRequest("encryption/encrypt", nil, request)
+	payload, err := godingtalk.HttpRequest("encryption/encrypt", nil, request)
 	if err != nil {
 		return "", err
 	}
@@ -30,7 +28,7 @@ func Decrypt(str string) (string, error) {
 	request := map[string]interface{}{
 		"data": str,
 	}
-	payload, err := HttpRequest("encryption/decrypt", nil, request)
+	payload, err := godingtalk.HttpRequest("encryption/decrypt", nil, request)
 	if err != nil {
 		return "", err
 	}

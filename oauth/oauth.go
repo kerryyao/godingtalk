@@ -5,11 +5,12 @@ import (
 	"net/url"
 
 	"github.com/kerryyao/godingtalk"
+	"github.com/kerryyao/godingtalk/contact"
 )
 
-// UserInfoByCode 校验免登录码并换取用户身份
-func UserInfoByCode(code string) (*godingtalk.User, error) {
-	var data godingtalk.User
+// OauthUserInfoByCode 校验免登录码并换取用户身份
+func OauthUserInfoByCode(code string) (*contact.User, error) {
+	var data contact.User
 	params := url.Values{}
 	params.Add("code", code)
 	payload, err := godingtalk.HttpRequest("user/getuserinfo", params, nil)

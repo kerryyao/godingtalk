@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/sha1"
 	"encoding/base64"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"math/rand"
 	r "math/rand"
 	"sort"
@@ -28,9 +30,9 @@ type Crypto struct {
 }
 
 /*
-	token		数据签名需要用到的token，ISV(服务提供商)推荐使用注册套件时填写的token，普通企业可以随机填写
-	aesKey  	数据加密密钥。用于回调数据的加密，长度固定为43个字符，从a-z, A-Z, 0-9共62个字符中选取,您可以随机生成，ISV(服务提供商)推荐使用注册套件时填写的EncodingAESKey
-	suiteKey	一般使用corpID
+token		数据签名需要用到的token，ISV(服务提供商)推荐使用注册套件时填写的token，普通企业可以随机填写
+aesKey  	数据加密密钥。用于回调数据的加密，长度固定为43个字符，从a-z, A-Z, 0-9共62个字符中选取,您可以随机生成，ISV(服务提供商)推荐使用注册套件时填写的EncodingAESKey
+suiteKey	一般使用corpID
 */
 func NewCrypto(token, aesKey, suiteKey string) (c *Crypto) {
 	c = &Crypto{
@@ -54,11 +56,11 @@ func NewCrypto(token, aesKey, suiteKey string) (c *Crypto) {
 }
 
 /*
-	signature: 签名字符串
-	timeStamp: 时间戳
-	nonce: 随机字符串
-	secretStr: 密文
-	返回: 解密后的明文
+signature: 签名字符串
+timeStamp: 时间戳
+nonce: 随机字符串
+secretStr: 密文
+返回: 解密后的明文
 */
 func (c *Crypto) DecryptMsg(signature, timeStamp, nonce, secretStr string) (string, error) {
 	if !c.VerifySignature(c.Token, timeStamp, nonce, secretStr, signature) {
@@ -91,10 +93,10 @@ func PKCS7UnPadding(plantText []byte) []byte {
 }
 
 /*
-	replyMsg: 明文字符串
-	timeStamp: 时间戳
-	nonce: 随机字符串
-	返回: 密文,签名字符串
+replyMsg: 明文字符串
+timeStamp: 时间戳
+nonce: 随机字符串
+返回: 密文,签名字符串
 */
 func (c *Crypto) EncryptMsg(replyMsg, timeStamp, nonce string) (string, string, error) {
 	//原生消息体长度
@@ -161,4 +163,25 @@ func (c *Crypto) RandomString(n int, alphabets ...byte) string {
 		}
 	}
 	return string(bytes)
+}
+
+func sha1Sign(s string) string {
+	// The pattern for generating a hash is `sha1.New()`,
+	// `sha1.Write(bytes)`, then `sha1.Sum([]byte{})`.
+	// Here we start with a new hash.
+	h := sha1.New()
+
+	// `Write` expects bytes. If you have a string `s`,
+	// use `[]byte(s)` to coerce it to bytes.
+	h.Write([]byte(s))
+
+	// This gets the finalized hash result as a byte
+	// slice. The argument to `Sum` can be used to append
+	// to an existing byte slice: it usually isn't needed.
+	bs := h.Sum(nil)
+
+	// SHA1 values are often printed in hex, for example
+	// in git commits. Use the `%x` format verb to convert
+	// a hash results to a hex string.
+	return fmt.Sprintf("%x", bs)
 }
