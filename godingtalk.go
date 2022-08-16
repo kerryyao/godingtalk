@@ -10,17 +10,17 @@ import (
 )
 
 var (
-	conf  *Config
+	Conf  *Config
 	cache *gocache.Cache
 )
 
 func Init(config *Config) {
-	conf = config
-	if conf == nil {
-		conf = &Config{}
+	Conf = config
+	if Conf == nil {
+		Conf = &Config{}
 	}
-	if conf.BaseURL == "" {
-		conf.BaseURL = "https://api.dingtalk.com"
+	if Conf.BaseURL == "" {
+		Conf.BaseURL = "https://api.dingtalk.com"
 	}
 
 	cache = gocache.New(7200*time.Second, 9000*time.Second)
@@ -30,19 +30,6 @@ func Init(config *Config) {
 type OAPIResponse struct {
 	ErrCode int    `json:"errcode"`
 	ErrMsg  string `json:"errmsg"`
-}
-
-// MessageResponse is
-type MessageResponse struct {
-	OAPIResponse
-	MessageID string `json:"messageId"`
-}
-
-// MessageResponse is
-type MessageReadListResponse struct {
-	OAPIResponse
-	NextCursor     int64    `json:"next_cursor"`
-	ReadUserIdList []string `json:"readUserIdList"`
 }
 
 // AccessTokenResponse is
@@ -60,7 +47,7 @@ type JsAPITicketResponse struct {
 }
 
 // RefreshAccessToken is to get a valid access token
-func RefreshAccessToken(p ...interface{}) (*string, error) {
+func RefreshAccessToken() (*string, error) {
 	var data *AccessTokenResponse
 	if cacheData, found := cache.Get("auth"); found {
 		data = cacheData.(*AccessTokenResponse)
@@ -68,10 +55,10 @@ func RefreshAccessToken(p ...interface{}) (*string, error) {
 	}
 
 	params := url.Values{}
-	params.Add("appkey", conf.AppKey)
-	params.Add("appsecret", conf.AppSecret)
+	params.Add("appkey", Conf.AppKey)
+	params.Add("appsecret", Conf.AppSecret)
 
-	payload, err := httpRequest("gettoken", params, nil)
+	payload, err := HttpRequest("gettoken", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +81,7 @@ func GetJsAPITicket(nonceStr, timestamp, url string) (string, error) {
 	}
 
 	if data == nil {
-		payload, err := httpRequest("get_jsapi_ticket", nil, nil)
+		payload, err := HttpRequest("get_jsapi_ticket", nil, nil)
 		if err == nil {
 			return "", err
 		}
@@ -108,9 +95,9 @@ func GetJsAPITicket(nonceStr, timestamp, url string) (string, error) {
 	config := map[string]string{
 		"url":       url,
 		"nonceStr":  nonceStr,
-		"agentId":   conf.AgentID,
+		"agentId":   Conf.AgentID,
 		"timeStamp": timestamp,
-		"corpId":    conf.CorpID,
+		"corpId":    Conf.CorpID,
 		"ticket":    data.Ticket,
 		"signature": Sign(data.Ticket, nonceStr, timestamp, url),
 	}

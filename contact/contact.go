@@ -1,61 +1,17 @@
-package godingtalk
+package contact
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+
+	"github.com/kerryyao/godingtalk"
 )
-
-type User struct {
-	OAPIResponse
-	Userid     string
-	Name       string
-	Mobile     string
-	Tel        string
-	Remark     string
-	Order      int
-	IsAdmin    bool
-	IsBoss     bool
-	IsLeader   bool
-	Active     bool
-	Department []int
-	Position   string
-	Email      string
-	OrgEmail   string
-	Avatar     string
-	Extattr    interface{}
-}
-
-type UserListResponse struct {
-	OAPIResponse
-	HasMore  bool
-	Userlist []User
-}
-
-type Department struct {
-	OAPIResponse
-	Id                    int
-	Name                  string
-	ParentId              int
-	Order                 int
-	DeptPerimits          string
-	UserPerimits          string
-	OuterDept             bool
-	OuterPermitDepts      string
-	OuterPermitUsers      string
-	OrgDeptOwner          string
-	DeptManagerUseridList string
-}
-
-type DepartmentListResponse struct {
-	OAPIResponse
-	Departments []Department `json:"department"`
-}
 
 // DepartmentList is 获取部门列表
 func DepartmentList() (*DepartmentListResponse, error) {
 	var data DepartmentListResponse
-	payload, err := HttpRequest("department/list", nil, nil)
+	payload, err := godingtalk.HttpRequest("department/list", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +27,7 @@ func DepartmentDetail(id int) (*Department, error) {
 	var data Department
 	params := url.Values{}
 	params.Add("id", fmt.Sprintf("%d", id))
-	payload, err := HttpRequest("department/get", params, nil)
+	payload, err := godingtalk.HttpRequest("department/get", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +49,7 @@ func UserList(departmentID, offset, size int) (*UserListResponse, error) {
 	params.Add("department_id", fmt.Sprintf("%d", departmentID))
 	params.Add("offset", fmt.Sprintf("%d", offset))
 	params.Add("size", fmt.Sprintf("%d", size))
-	payload, err := HttpRequest("user/list", params, nil)
+	payload, err := godingtalk.HttpRequest("user/list", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +63,7 @@ func UserList(departmentID, offset, size int) (*UserListResponse, error) {
 // CreateChat is
 func CreateChat(name string, owner string, useridlist []string) (*string, error) {
 	var data struct {
-		OAPIResponse
+		godingtalk.OAPIResponse
 		Chatid string
 	}
 	request := map[string]interface{}{
@@ -115,7 +71,7 @@ func CreateChat(name string, owner string, useridlist []string) (*string, error)
 		"owner":      owner,
 		"useridlist": useridlist,
 	}
-	payload, err := HttpRequest("chat/create", nil, request)
+	payload, err := godingtalk.HttpRequest("chat/create", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +87,7 @@ func UserInfoByCode(code string) (*User, error) {
 	var data User
 	params := url.Values{}
 	params.Add("code", code)
-	payload, err := HttpRequest("user/getuserinfo", params, nil)
+	payload, err := godingtalk.HttpRequest("user/getuserinfo", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +103,7 @@ func UserInfoByUserId(userid string) (*User, error) {
 	var data User
 	params := url.Values{}
 	params.Add("userid", userid)
-	payload, err := HttpRequest("user/get", params, nil)
+	payload, err := godingtalk.HttpRequest("user/get", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -160,13 +116,13 @@ func UserInfoByUserId(userid string) (*User, error) {
 // UseridByUnionId 通过UnionId获取玩家Userid
 func UseridByUnionId(unionid string) (*string, error) {
 	var data struct {
-		OAPIResponse
+		godingtalk.OAPIResponse
 		UserID string `json:"userid"`
 	}
 
 	params := url.Values{}
 	params.Add("unionid", unionid)
-	payload, err := HttpRequest("user/getUseridByUnionid", params, nil)
+	payload, err := godingtalk.HttpRequest("user/getUseridByUnionid", params, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -180,13 +136,13 @@ func UseridByUnionId(unionid string) (*string, error) {
 // UseridByMobile 通过手机号获取Userid
 func UseridByMobile(mobile string) (*string, error) {
 	var data struct {
-		OAPIResponse
+		godingtalk.OAPIResponse
 		UserID string `json:"userid"`
 	}
 
 	params := url.Values{}
 	params.Add("mobile", mobile)
-	payload, err := HttpRequest("user/get_by_mobile", params, nil)
+	payload, err := godingtalk.HttpRequest("user/get_by_mobile", params, nil)
 	if err != nil {
 		return nil, err
 	}

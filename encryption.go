@@ -14,7 +14,7 @@ func Encrypt(str string) (string, error) {
 	request := map[string]interface{}{
 		"data": str,
 	}
-	payload, err := httpRequest("encryption/encrypt", nil, request)
+	payload, err := HttpRequest("encryption/encrypt", nil, request)
 	if err != nil {
 		return "", err
 	}
@@ -30,7 +30,7 @@ func Decrypt(str string) (string, error) {
 	request := map[string]interface{}{
 		"data": str,
 	}
-	payload, err := httpRequest("encryption/decrypt", nil, request)
+	payload, err := HttpRequest("encryption/decrypt", nil, request)
 	if err != nil {
 		return "", err
 	}

@@ -27,7 +27,7 @@ type DownloadFile struct {
 }
 
 // http request
-func httpRequest(path string, params url.Values, requestData interface{}) (*[]byte, error) {
+func HttpRequest(path string, params url.Values, requestData interface{}) (*[]byte, error) {
 	client := &http.Client{}
 
 	token, err := RefreshAccessToken()
@@ -37,7 +37,7 @@ func httpRequest(path string, params url.Values, requestData interface{}) (*[]by
 	params.Set("access_token", *token)
 
 	var request *http.Request
-	url := fmt.Sprintf(`%s/%s?%s`, conf.BaseURL, path, params.Encode())
+	url := fmt.Sprintf(`%s/%s?%s`, Conf.BaseURL, path, params.Encode())
 	if requestData != nil {
 		request, _ = http.NewRequest("GET", url, nil)
 		goto DOIT

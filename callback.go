@@ -19,7 +19,7 @@ func CallbackRegister(callbacks []string, token string, aes_key string, callback
 		"aes_key":       aes_key,
 		"url":           callbackURL,
 	}
-	payload, err := httpRequest("call_back/register_call_back", nil, request)
+	payload, err := HttpRequest("call_back/register_call_back", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func CallbackUpdate(callbacks []string, token string, aes_key string, callbackUR
 		"aes_key":       aes_key,
 		"url":           callbackURL,
 	}
-	payload, err := httpRequest("call_back/update_call_back", nil, request)
+	payload, err := HttpRequest("call_back/update_call_back", nil, request)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func CallbackUpdate(callbacks []string, token string, aes_key string, callbackUR
 // Delete is 删除事件回调接口
 func CallbackDelete() (*OAPIResponse, error) {
 	data := &OAPIResponse{}
-	payload, err := httpRequest("call_back/delete_call_back", nil, nil)
+	payload, err := HttpRequest("call_back/delete_call_back", nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func CallbackDelete() (*OAPIResponse, error) {
 // List is 查询事件回调接口
 func CallbackList() (*Callback, error) {
 	data := &Callback{}
-	payload, err := httpRequest("call_back/get_call_back", nil, nil)
+	payload, err := HttpRequest("call_back/get_call_back", nil, nil)
 	if err != nil {
 		return nil, err
 	}
