@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -36,7 +37,7 @@ func httpRequest(path string, params url.Values, requestData interface{}) (*[]by
 	params.Set("access_token", *token)
 
 	var request *http.Request
-	url := "https://" + conf.BaseURL + "/" + path + "?" + params.Encode()
+	url := fmt.Sprintf(`%s/%s?%s`, conf.BaseURL, path, params.Encode())
 	if requestData != nil {
 		request, _ = http.NewRequest("GET", url, nil)
 		goto DOIT

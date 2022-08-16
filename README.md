@@ -9,5 +9,10 @@ Check out DingTalk Open API document at: https://open.dingtalk.com/document/
 Fetch the SDK
 ```
 export GOPATH=`pwd`
-go get github.com/kerryyao/godingtalk
+go get -v -u github.com/kerryyao/godingtalk
 ```
+
+
+## etc
+
+see https://github.com/alibabacloud-go/dingtalk

@@ -20,7 +20,7 @@ func Init(config *Config) {
 		conf = &Config{}
 	}
 	if conf.BaseURL == "" {
-		conf.BaseURL = "oapi.dingtalk.com"
+		conf.BaseURL = "https://api.dingtalk.com"
 	}
 
 	cache = gocache.New(7200*time.Second, 9000*time.Second)
