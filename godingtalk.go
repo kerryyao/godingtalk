@@ -20,7 +20,7 @@ func Init(config *Config) {
 		Conf = &Config{}
 	}
 	if Conf.BaseURL == "" {
-		Conf.BaseURL = "https://api.dingtalk.com"
+		Conf.BaseURL = "https://oapi.dingtalk.com"
 	}
 
 	cache = gocache.New(7200*time.Second, 9000*time.Second)
@@ -47,11 +47,7 @@ type JsAPITicketResponse struct {
 }
 
 // RefreshAccessToken is to get a valid access token
-func RefreshAccessToken(path string) (*string, error) {
-	if path == "v1.0/oauth2/accessToken" {
-		return nil, nil
-	}
-
+func RefreshAccessToken() (*string, error) {
 	var data *AccessTokenResponse
 	if cacheData, found := cache.Get("auth"); found {
 		data = cacheData.(*AccessTokenResponse)
@@ -62,7 +58,7 @@ func RefreshAccessToken(path string) (*string, error) {
 	params.Add("appKey", Conf.AppKey)
 	params.Add("appSecret", Conf.AppSecret)
 
-	payload, err := HttpRequest("v1.0/oauth2/accessToken", params, nil)
+	payload, err := httpRequest("gettoken", params, nil)
 	if err != nil {
 		return nil, err
 	}
