@@ -86,17 +86,25 @@ type UserListResponse struct {
 
 type Department struct {
 	godingtalk.OAPIResponse
-	Id                    int
-	Name                  string
-	ParentId              int
-	Order                 int
-	DeptPerimits          string
-	UserPerimits          string
-	OuterDept             bool
-	OuterPermitDepts      string
-	OuterPermitUsers      string
-	OrgDeptOwner          string
-	DeptManagerUseridList string
+	Result struct {
+		AutoAddUser         bool          `json:"auto_add_user"`
+		AutoApproveApply    bool          `json:"auto_approve_apply"`
+		Brief               string        `json:"brief"`
+		CreateDeptGroup     bool          `json:"create_dept_group"`
+		DeptGroupChatID     string        `json:"dept_group_chat_id"`
+		DeptID              int           `json:"dept_id"`
+		DeptPermits         []interface{} `json:"dept_permits"`
+		GroupContainSubDept bool          `json:"group_contain_sub_dept"`
+		HideDept            bool          `json:"hide_dept"`
+		Name                string        `json:"name"`
+		Order               int           `json:"order"`
+		OrgDeptOwner        string        `json:"org_dept_owner"`
+		OuterDept           bool          `json:"outer_dept"`
+		OuterPermitDepts    []interface{} `json:"outer_permit_depts"`
+		OuterPermitUsers    []interface{} `json:"outer_permit_users"`
+		ParentID            int           `json:"parent_id"`
+		UserPermits         []interface{} `json:"user_permits"`
+	} `json:"result"`
 }
 
 type DepartmentListResponse struct {
